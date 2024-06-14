@@ -6,6 +6,7 @@
 #include "TCanvas.h"
 #include "TClass.h"
 #include "TCollection.h"
+#include "TComplex.h"
 #include "TF1.h"
 #include "TFile.h"
 #include "TFitResult.h"
@@ -13,19 +14,18 @@
 #include "TGDNDManager.h"
 #include "TGFileDialog.h"
 #include "TGLabel.h"
-#include "TComplex.h"
 #include "TGListTree.h"
 #include "TGMenu.h"
 #include "TGMsgBox.h"
 #include "TGPicture.h"
 #include "TGraphErrors.h"
-#include "TH2.h"
 #include "TH1.h"
+#include "TH2.h"
 #include "TH2Poly.h"
 #include "TH3.h"
 #include "TH3F.h"
-#include "THn.h"
 #include "THashList.h"
+#include "THn.h"
 #include "TKey.h"
 #include "TLatex.h"
 #include "TLeaf.h"
@@ -42,8 +42,9 @@
 #include "TPaletteAxis.h"
 #include "TPaveLabel.h"
 #include "TPaveStats.h"
-#include "TProfile3D.h"
 #include "TProfile.h"
+#include "TProfile2D.h"
+#include "TProfile3D.h"
 #include "TROOT.h"
 #include "TRandom3.h"
 #include "TRootEmbeddedCanvas.h"
@@ -54,7 +55,6 @@
 #include "TTimer.h"
 #include "TTree.h"
 #include "TVector3.h"
-#include "TProfile2D.h"
 #include <TBenchmark.h>
 #include <TCanvas.h>
 #include <TFile.h>
@@ -68,7 +68,6 @@
 #include <TROOT.h>
 #include <TRandom3.h>
 #include <TSystem.h>
-
 
 #include "fstream"
 #include "iomanip"
@@ -86,8 +85,18 @@ int GenerateUID() {
   return id++;
 }
 
-TString dec2hex(int dec){
-  return TString::Format("%X", dec);
+TString dec2hex(int dec) { return TString::Format("%X", dec); }
+
+TString getLastButOnePathComponent(TString str) {
+  int pos_last = str.Last('/');
+
+  if (pos_last != str.Length() - 1) {
+    return str(pos_last + 1, str.Length() - pos_last - 1);
+  }
+
+  str = str(0, pos_last);
+  pos_last = str.Last('/');
+  return str(pos_last + 1, str.Length() - pos_last - 1);
 }
 
 #endif
